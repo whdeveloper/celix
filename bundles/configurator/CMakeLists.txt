@@ -15,12 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
-# Celix C bundles
-add_subdirectory(http_admin)
-add_subdirectory(logging)
-add_subdirectory(shell)
-add_subdirectory(remote_services)
-add_subdirectory(cxx_remote_services)
-add_subdirectory(components_ready_check)
-add_subdirectory(event_admin)
-add_subdirectory(configurator)
+celix_subproject(CONFIGURATOR "Option to enable building the Configurator bundle" ON)
+if (CONFIGURATOR)
+    add_subdirectory(configurator_api)
+    add_subdirectory(configurator)
+endif()
