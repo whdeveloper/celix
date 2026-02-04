@@ -15,12 +15,14 @@
 # specific language governing permissions and limitations
 # under the License.
 
-# Celix C bundles
-add_subdirectory(http_admin)
-add_subdirectory(logging)
-add_subdirectory(shell)
-add_subdirectory(remote_services)
-add_subdirectory(cxx_remote_services)
-add_subdirectory(components_ready_check)
-add_subdirectory(event_admin)
-add_subdirectory(configurator)
+add_library(configurator_api INTERFACE)
+target_include_directories(configurator_api INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+    $<INSTALL_INTERFACE:include/celix/configurator_api>
+)
+target_link_libraries(configurator_api INTERFACE Celix::utils)
+
+add_library(Celix::configurator_api ALIAS configurator_api)
+
+install(TARGETS configurator_api EXPORT celix COMPONENT configurator)
+install(DIRECTORY include/ DESTINATION include/celix/configurator_api COMPONENT configurator)

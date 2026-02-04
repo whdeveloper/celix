@@ -15,12 +15,16 @@
 # specific language governing permissions and limitations
 # under the License.
 
-# Celix C bundles
-add_subdirectory(http_admin)
-add_subdirectory(logging)
-add_subdirectory(shell)
-add_subdirectory(remote_services)
-add_subdirectory(cxx_remote_services)
-add_subdirectory(components_ready_check)
-add_subdirectory(event_admin)
-add_subdirectory(configurator)
+add_executable(test_configurator
+    src/ConfiguratorTestSuite.cc
+)
+
+target_link_libraries(test_configurator PRIVATE
+    configurator_cut
+    Celix::framework
+    GTest::gtest
+    GTest::gtest_main
+)
+
+add_test(NAME test_configurator COMMAND test_configurator)
+setup_target_for_coverage(test_configurator SCAN_DIR ..)
